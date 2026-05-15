@@ -138,6 +138,95 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
+st.markdown("""
+<style>
+    /* ============================================================
+       FIX MODO OSCURO STREAMLIT
+       Fuerza texto oscuro dentro de tarjetas claras
+       ============================================================ */
+
+    .card,
+    .mini-card,
+    .warning-card,
+    .success-card,
+    .danger-card,
+    .metric-box {
+        color: #0f172a !important;
+    }
+
+    .card h1, .card h2, .card h3, .card h4,
+    .mini-card h1, .mini-card h2, .mini-card h3, .mini-card h4,
+    .warning-card h1, .warning-card h2, .warning-card h3, .warning-card h4,
+    .success-card h1, .success-card h2, .success-card h3, .success-card h4,
+    .danger-card h1, .danger-card h2, .danger-card h3, .danger-card h4,
+    .metric-box h1, .metric-box h2, .metric-box h3, .metric-box h4 {
+        color: #0f172a !important;
+    }
+
+    .card p,
+    .card li,
+    .card ol,
+    .card ul,
+    .mini-card p,
+    .mini-card li,
+    .mini-card ol,
+    .mini-card ul,
+    .warning-card p,
+    .warning-card li,
+    .warning-card ol,
+    .warning-card ul,
+    .success-card p,
+    .success-card li,
+    .success-card ol,
+    .success-card ul,
+    .danger-card p,
+    .danger-card li,
+    .danger-card ol,
+    .danger-card ul,
+    .metric-box p {
+        color: #334155 !important;
+    }
+
+    .card b,
+    .mini-card b,
+    .warning-card b,
+    .success-card b,
+    .danger-card b {
+        color: #0f172a !important;
+    }
+
+    .small-note {
+        color: #cbd5e1 !important;
+    }
+
+    /* Mantener la portada con texto blanco */
+    .hero,
+    .hero h1,
+    .hero h2,
+    .hero h3,
+    .hero p,
+    .hero b {
+        color: white !important;
+    }
+
+    /* Mejor lectura de ecuaciones oscuras */
+    .eq-box,
+    .eq-box b {
+        color: white !important;
+    }
+
+    /* Ajuste visual para tabs en modo oscuro */
+    button[data-baseweb="tab"] {
+        font-weight: 600;
+    }
+
+    /* Mejora contraste de subtítulos normales de Streamlit */
+    h1, h2, h3 {
+        letter-spacing: -0.02em;
+    }
+</style>
+""", unsafe_allow_html=True)
+
 
 # -----------------------------
 # FUNCIONES
