@@ -191,18 +191,38 @@ def simular_oferta_demanda(n=500, seed=42, beta_precio_demanda=-1.2, alpha_preci
 
 
 def ols(y, X):
-    X = np.asarray(X)
-    y = np.asarray(y).reshape(-1, 1)
-    beta = np.linalg.inv(X.T @ X) @ X.T @ y
+    """
+    Estimación OLS robusta para evitar errores de conversión
+    entre matrices numpy 1x1 y escalares en Streamlit Cloud.
+    """
+    X = np.asarray(X, dtype=float)
+    y = np.asarray(y, dtype=float).reshape(-1, 1)
+
+    n, k = X.shape
+
+    # Estimación beta = (X'X)^(-1)X'y
+    # Se usa pinv para evitar errores si X'X está cerca de ser singular.
+    beta = np.linalg.pinv(X.T @ X) @ X.T @ y
+
     yhat = X @ beta
     resid = y - yhat
-    n, k = X.shape
-    s2 = float((resid.T @ resid) / (n - k))
-    var_beta = s2 * np.linalg.inv(X.T @ X)
-    se = np.sqrt(np.diag(var_beta)).reshape(-1, 1)
-    t = beta / se
-    return beta.flatten(), se.flatten(), t.flatten(), yhat.flatten(), resid.flatten()
 
+    # SSE como escalar real
+    sse = np.sum(resid ** 2)
+    s2 = sse / (n - k)
+
+    var_beta = s2 * np.linalg.pinv(X.T @ X)
+    se = np.sqrt(np.diag(var_beta)).reshape(-1, 1)
+
+    t = beta / se
+
+    return (
+        beta.flatten(),
+        se.flatten(),
+        t.flatten(),
+        yhat.flatten(),
+        resid.flatten()
+    )
 
 def estimar_modelos(df):
     """
